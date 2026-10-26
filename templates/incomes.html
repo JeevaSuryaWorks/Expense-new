@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block header_title %}Income & Cashflow Inflows{% endblock %}
+
+{% block content %}
+<div class="row align-items-center mb-4">
+    <div class="col-md-6">
+        <h4 class="fw-bold mb-1">Income Streams & Revenue</h4>
+        <p class="text-secondary small mb-0">Record all salary, freelance gigs, dividends, and cash inflows.</p>
+    </div>
+    <div class="col-md-6 d-flex justify-content-md-end gap-2 mt-3 mt-md-0">
+        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+            <i class="fa-solid fa-plus me-1"></i> Log New Income
+        </button>
+    </div>
+</div>
+
+<!-- Income Metrics -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <span class="metric-label">RECORDED INFLOW ({{ curr_month }})</span>
+                <h3 class="fw-bold text-success mb-0">${{ "%.2f"|format(total_income) }}</h3>
+                <small class="text-muted">Total income logged for this calendar month</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <span class="metric-label">INCOME STREAMS</span>
+                <h3 class="fw-bold text-primary mb-0">{{ incomes|length }} Sources</h3>
+                <small class="text-muted">Direct deposits, transfers, and cash logged</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Income Table -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-3 px-4">
+        <h5 class="card-title fw-bold mb-0">Income Log</h5>
+        <span class="badge bg-success-subtle text-success border border-success-subtle">
+            Active Records
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light-header">
+                    <tr>
+                        <th class="ps-4">Income Source / Payer</th>
+                        <th>Date</th>
+                        <th>Method</th>
+                        <th>Notes</th>
+                        <th class="text-end">Amount</th>
+                        <th class="text-center pe-4" style="width: 80px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if incomes %}
+                        {% for inc in incomes %}
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-semibold text-truncate">{{ inc.source }}</div>
+                            </td>
+                            <td class="text-secondary small font-mono">{{ inc.date }}</td>
+                            <td>
+                                <span class="badge bg-secondary-subtle text-secondary small">
+                                    {{ inc.payment_method }}
+                                </span>
+                            </td>
+                            <td class="text-muted small">
+                                {{ inc.notes if inc.notes else '—' }}
+                            </td>
+                            <td class="text-end fw-bold text-success">
+                                +${{ "%.2f"|format(inc.amount) }}
+                            </td>
+                            <td class="text-center pe-4">
+                                <form action="{{ url_for('delete_income', id=inc.id) }}" method="POST" onsubmit="return confirm('Delete this income record?');" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger btn-icon-sm" title="Delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-hand-holding-dollar fa-3x mb-3 text-secondary opacity-50"></i>
+                                <h5>No income records for this month</h5>
+                                <p class="small text-secondary mb-3">Add your salary or freelance deposits to balance your cashflow.</p>
+                                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+                                    <i class="fa-solid fa-plus me-1"></i> Log Income
+                                </button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Log Income Modal -->
+<div class="modal fade" id="addIncomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-0">
+            <form action="{{ url_for('incomes_view') }}" method="POST">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-success"><i class="fa-solid fa-circle-plus me-2"></i>Log Income Inflow</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Income Source / Client</label>
+                        <input type="text" name="source" class="form-control" placeholder="e.g. Monthly Salary, Freelance project, Stock dividend" required>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small fw-semibold">Amount ($)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" name="amount" class="form-control" placeholder="3000.00" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-semibold">Date</label>
+                            <input type="date" name="date" class="form-control" value="" id="incomeDateInput">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Payment Method</label>
+                        <select name="payment_method" class="form-select">
+                            <option value="Bank Transfer">Bank Transfer / Direct Deposit</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Check">Check</option>
+                            <option value="Digital Wallet">Digital Wallet (PayPal, Stripe)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Notes (Optional)</label>
+                        <input type="text" name="notes" class="form-control" placeholder="e.g. October paycheck, Bonus">
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success btn-sm px-4">Save Income</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById('incomeDateInput');
+        if (dateInput) dateInput.value = today;
+    });
+</script>
+{% endblock %}
