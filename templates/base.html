@@ -153,13 +153,13 @@
                     <div class="smart-input-box mb-3">
                         <label for="smartPromptInput" class="form-label text-muted small fw-semibold">WHAT DID YOU SPEND ON?</label>
                         <div class="input-group">
-                            <textarea id="smartPromptInput" class="form-control" rows="2" placeholder="e.g. Spent $64.50 at Olive Garden yesterday via Credit Card"></textarea>
+                            <textarea id="smartPromptInput" class="form-control" rows="2" placeholder="e.g. Spent ₹650 at Barbeque Nation yesterday via UPI"></textarea>
                         </div>
                         <div class="d-flex flex-wrap gap-1 mt-2">
-                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Dinner with friends $45 yesterday')">Dinner $45</span>
-                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Paid $85 for electric utility bill')">Electric bill $85</span>
-                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Uber ride $24 today via UPI')">Uber ride $24</span>
-                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Netflix subscription $15.99')">Netflix $15.99</span>
+                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Dinner with friends ₹450 yesterday')">Dinner ₹450</span>
+                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Paid ₹1850 for electric utility bill')">Electric bill ₹1,850</span>
+                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Uber ride ₹240 today via UPI')">Uber ride ₹240</span>
+                            <span class="badge prompt-pill" onclick="fillSmartPrompt('Netflix subscription ₹649')">Netflix ₹649</span>
                         </div>
                     </div>
 
@@ -176,7 +176,7 @@
                                     <input type="text" name="title" id="smartParsedTitle" class="form-control form-control-sm" required>
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label small text-muted">Amount ($)</label>
+                                    <label class="form-label small text-muted">Amount (₹)</label>
                                     <input type="number" step="0.01" name="amount" id="smartParsedAmount" class="form-control form-control-sm" required>
                                 </div>
                                 <div class="col-6">
@@ -236,9 +236,9 @@
                         </div>
                         <div class="row g-2 mb-3">
                             <div class="col-6">
-                                <label class="form-label small fw-semibold">Amount ($)</label>
+                                <label class="form-label small fw-semibold">Amount (₹)</label>
                                 <div class="input-group">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">₹</span>
                                     <input type="number" step="0.01" name="amount" class="form-control" placeholder="0.00" required>
                                 </div>
                             </div>

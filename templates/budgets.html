@@ -24,7 +24,7 @@
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <span class="metric-label">TOTAL ALLOCATED BUDGET</span>
-                <h3 class="fw-bold mb-0 text-primary">${{ "%.2f"|format(total_budget) }}</h3>
+                <h3 class="fw-bold mb-0 text-primary">₹{{ "%.2f"|format(total_budget) }}</h3>
                 <small class="text-muted">Target ceiling for {{ target_month }}</small>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <span class="metric-label">TOTAL SPENT SO FAR</span>
-                <h3 class="fw-bold mb-0 text-danger">${{ "%.2f"|format(total_spent) }}</h3>
+                <h3 class="fw-bold mb-0 text-danger">₹{{ "%.2f"|format(total_spent) }}</h3>
                 <small class="text-muted">Accumulated expenses</small>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <div class="card-body">
                 <span class="metric-label">REMAINING ALLOWANCE</span>
                 <h3 class="fw-bold mb-0 {% if net_budget_remaining >= 0 %}text-success{% else %}text-danger{% endif %}">
-                    ${{ "%.2f"|format(net_budget_remaining) }}
+                    ₹{{ "%.2f"|format(net_budget_remaining) }}
                 </h3>
                 <small class="text-muted">
                     {% if net_budget_remaining >= 0 %}Buffer remaining{% else %}Over allocated budget{% endif %}
@@ -69,7 +69,7 @@
                                 <h5 class="fw-bold mb-0">{{ item.category.name }}</h5>
                                 <span class="badge bg-{{ item.status }}-subtle text-{{ item.status }} border border-{{ item.status }}-subtle small">
                                     {% if item.actual_pct > 100 %}
-                                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Over Budget by ${{ "%.2f"|format(-item.remaining) }}
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Over Budget by ₹{{ "%.2f"|format(-item.remaining) }}
                                     {% elif item.actual_pct >= 80 %}
                                         <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ item.actual_pct }}% Used (Warning)
                                     {% else %}
@@ -106,11 +106,11 @@
                     <div class="d-flex justify-content-between align-items-end mb-2">
                         <div>
                             <span class="small text-muted">Spent: </span>
-                            <span class="fw-bold">${{ "%.2f"|format(item.spent) }}</span>
+                            <span class="fw-bold">₹{{ "%.2f"|format(item.spent) }}</span>
                         </div>
                         <div class="text-end">
                             <span class="small text-muted">Limit: </span>
-                            <span class="fw-bold text-primary">${{ "%.2f"|format(item.limit) }}</span>
+                            <span class="fw-bold text-primary">₹{{ "%.2f"|format(item.limit) }}</span>
                         </div>
                     </div>
 
@@ -124,9 +124,9 @@
                         <span>{{ item.actual_pct }}% consumed</span>
                         <span>
                             {% if item.remaining >= 0 %}
-                                ${{ "%.2f"|format(item.remaining) }} available
+                                ₹{{ "%.2f"|format(item.remaining) }} available
                             {% else %}
-                                <span class="text-danger fw-semibold">-${{ "%.2f"|format(-item.remaining) }} deficit</span>
+                                <span class="text-danger fw-semibold">-₹{{ "%.2f"|format(-item.remaining) }} deficit</span>
                             {% endif %}
                         </span>
                     </div>
@@ -170,10 +170,10 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Monthly Spending Limit ($)</label>
+                        <label class="form-label small fw-semibold">Monthly Spending Limit (₹)</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="number" step="0.01" name="amount" id="budgetAmountInput" class="form-control" placeholder="500.00" required>
+                            <span class="input-group-text">₹</span>
+                            <input type="number" step="0.01" name="amount" id="budgetAmountInput" class="form-control" placeholder="5000.00" required>
                         </div>
                     </div>
                     <div class="small text-muted">

@@ -20,7 +20,7 @@
                             <span class="input-group-text bg-transparent border-end-0 text-primary">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                             </span>
-                            <input type="text" id="dashboardSmartInput" class="form-control border-start-0 ps-0" placeholder="e.g. Spent $38 on Italian lunch with team today" onkeypress="handleSmartInputEnter(event)">
+                            <input type="text" id="dashboardSmartInput" class="form-control border-start-0 ps-0" placeholder="e.g. Spent ₹380 on lunch with team today" onkeypress="handleSmartInputEnter(event)">
                             <button class="btn btn-primary px-3 px-md-4" type="button" onclick="triggerSmartFromDashboard()">
                                 <i class="fa-solid fa-arrow-right me-1"></i> Quick Add
                             </button>
@@ -29,9 +29,9 @@
                     <div class="col-lg-5 col-md-6">
                         <div class="small text-muted mb-1">PROMPT EXAMPLES:</div>
                         <div class="d-flex flex-wrap gap-1">
-                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('Gas fillup $52 at Shell yesterday')">Gas $52</button>
-                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('Starbucks matcha latte $7.50 via UPI')">Starbucks $7.50</button>
-                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('Whole foods grocery $124 today')">Groceries $124</button>
+                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('Gas fillup ₹1500 at IndianOil yesterday')">Petrol ₹1,500</button>
+                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('Starbucks cold brew ₹350 via UPI')">Starbucks ₹350</button>
+                            <button class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill font-mono" onclick="setDashboardSmart('BigBasket grocery ₹2400 today')">Groceries ₹2,400</button>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="metric-label">MONTHLY SPENDING</div>
-                        <h3 class="metric-value mb-1">${{ "%.2f"|format(summary.total_spent) }}</h3>
+                        <h3 class="metric-value mb-1">₹{{ "%.2f"|format(summary.total_spent) }}</h3>
                         <div class="metric-subtext">
                             <span class="text-secondary">{{ summary.expenses_count }} transactions</span> in {{ summary.target_month }}
                         </div>
@@ -69,7 +69,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="metric-label">TOTAL INCOME</div>
-                        <h3 class="metric-value mb-1 text-success">${{ "%.2f"|format(summary.total_income) }}</h3>
+                        <h3 class="metric-value mb-1 text-success">₹{{ "%.2f"|format(summary.total_income) }}</h3>
                         <div class="metric-subtext">
                             <a href="{{ url_for('incomes_view') }}" class="text-success text-decoration-none">
                                 <i class="fa-solid fa-plus-circle me-1"></i> Log new income
@@ -92,7 +92,7 @@
                     <div>
                         <div class="metric-label">NET CASHFLOW / SAVINGS</div>
                         <h3 class="metric-value mb-1 {% if summary.net_savings >= 0 %}text-primary{% else %}text-danger{% endif %}">
-                            ${{ "%.2f"|format(summary.net_savings) }}
+                            ₹{{ "%.2f"|format(summary.net_savings) }}
                         </h3>
                         <div class="metric-subtext">
                             <span class="badge {% if summary.savings_rate >= 20 %}bg-success{% elif summary.savings_rate > 0 %}bg-info{% else %}bg-danger{% endif %}">
@@ -117,7 +117,7 @@
                         <div class="metric-label">BUDGET UTILIZATION</div>
                         <h3 class="metric-value mb-1">{{ summary.budget_usage_pct }}%</h3>
                         <div class="metric-subtext">
-                            <span class="text-secondary">${{ "%.2f"|format(summary.total_spent) }} of ${{ "%.2f"|format(summary.total_budget) }}</span>
+                            <span class="text-secondary">₹{{ "%.2f"|format(summary.total_spent) }} of ₹{{ "%.2f"|format(summary.total_budget) }}</span>
                         </div>
                     </div>
                     <div class="metric-icon-box {% if summary.budget_usage_pct > 100 %}bg-danger-subtle text-danger{% elif summary.budget_usage_pct >= 80 %}bg-warning-subtle text-warning{% else %}bg-info-subtle text-info{% endif %}">
@@ -233,8 +233,8 @@
                                     <span class="fw-semibold small">{{ item.category.name }}</span>
                                 </div>
                                 <div class="text-end">
-                                    <span class="fw-bold small">${{ "%.2f"|format(item.spent) }}</span>
-                                    <span class="text-muted small"> / ${{ "%.2f"|format(item.budget) }}</span>
+                                    <span class="fw-bold small">₹{{ "%.2f"|format(item.spent) }}</span>
+                                    <span class="text-muted small"> / ₹{{ "%.2f"|format(item.budget) }}</span>
                                 </div>
                             </div>
                             <div class="progress progress-thin">
@@ -244,7 +244,7 @@
                             </div>
                             <div class="d-flex justify-content-between small text-muted mt-1 font-xs">
                                 <span>{{ item.percentage }}% spent</span>
-                                <span>${{ "%.2f"|format(item.remaining) }} left</span>
+                                <span>₹{{ "%.2f"|format(item.remaining) }} left</span>
                             </div>
                         </div>
                         {% endfor %}
@@ -306,7 +306,7 @@
                                         </span>
                                     </td>
                                     <td class="text-end pe-4 fw-bold text-danger">
-                                        -${{ "%.2f"|format(exp.amount) }}
+                                        -₹{{ "%.2f"|format(exp.amount) }}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -338,7 +338,7 @@
                         </div>
                         <div>
                             <h6 class="fw-bold mb-0">Active Recurring Subscriptions & Fixed Bills</h6>
-                            <small class="text-secondary">Estimated ${{ "%.2f"|format(total_recurring) }}/month committed</small>
+                            <small class="text-secondary">Estimated ₹{{ "%.2f"|format(total_recurring) }}/month committed</small>
                         </div>
                     </div>
                 </div>
@@ -351,7 +351,7 @@
                                 <div class="small text-muted">Billed day {{ rec.billing_day }} &bull; {{ rec.frequency }}</div>
                             </div>
                             <div class="text-end">
-                                <span class="fw-bold text-primary">${{ "%.2f"|format(rec.amount) }}</span>
+                                <span class="fw-bold text-primary">₹{{ "%.2f"|format(rec.amount) }}</span>
                             </div>
                         </div>
                     </div>

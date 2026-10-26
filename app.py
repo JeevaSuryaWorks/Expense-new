@@ -38,14 +38,14 @@ def seed_database_if_empty():
 
     # 2. Seed Monthly Budgets
     default_budgets = {
-        "Food & Dining": 600.0,
-        "Housing & Rent": 1200.0,
-        "Transportation": 250.0,
-        "Utilities & Bills": 200.0,
-        "Entertainment": 160.0,
-        "Shopping": 350.0,
-        "Health & Fitness": 120.0,
-        "Education": 80.0
+        "Food & Dining": 12000.0,
+        "Housing & Rent": 22000.0,
+        "Transportation": 5000.0,
+        "Utilities & Bills": 3500.0,
+        "Entertainment": 3000.0,
+        "Shopping": 6000.0,
+        "Health & Fitness": 2500.0,
+        "Education": 2000.0
     }
     for cat_name, b_amt in default_budgets.items():
         if cat_name in category_objs:
@@ -60,14 +60,14 @@ def seed_database_if_empty():
     incomes = [
         Income(
             source="Tech Corp Software Salary",
-            amount=4800.0,
+            amount=85000.0,
             date=now.replace(day=1).strftime('%Y-%m-%d'),
             payment_method="Bank Transfer",
             notes="Monthly direct deposit salary"
         ),
         Income(
             source="Freelance Web Consultation",
-            amount=750.0,
+            amount=15000.0,
             date=now.replace(day=min(12, curr_day)).strftime('%Y-%m-%d'),
             payment_method="UPI",
             notes="Client project milestone"
@@ -78,28 +78,28 @@ def seed_database_if_empty():
 
     # 4. Seed Recurring Subscriptions
     recurring = [
-        RecurringExpense(title="Netflix 4K Ultra", amount=22.99, frequency="Monthly", billing_day=5, category_id=category_objs["Entertainment"].id),
-        RecurringExpense(title="Spotify Duo Plan", amount=14.99, frequency="Monthly", billing_day=10, category_id=category_objs["Entertainment"].id),
-        RecurringExpense(title="Fiber Gigabit Internet", amount=70.00, frequency="Monthly", billing_day=15, category_id=category_objs["Utilities & Bills"].id),
-        RecurringExpense(title="Equinox Gym Membership", amount=65.00, frequency="Monthly", billing_day=1, category_id=category_objs["Health & Fitness"].id)
+        RecurringExpense(title="Netflix Premium 4K", amount=649.00, frequency="Monthly", billing_day=5, category_id=category_objs["Entertainment"].id),
+        RecurringExpense(title="Spotify Individual Plan", amount=179.00, frequency="Monthly", billing_day=10, category_id=category_objs["Entertainment"].id),
+        RecurringExpense(title="Airtel Fiber Broadband", amount=1199.00, frequency="Monthly", billing_day=15, category_id=category_objs["Utilities & Bills"].id),
+        RecurringExpense(title="Cult.fit Gym Membership", amount=1800.00, frequency="Monthly", billing_day=1, category_id=category_objs["Health & Fitness"].id)
     ]
     for rec in recurring:
         db.session.add(rec)
 
     # 5. Seed Realistic Expenses
     sample_expenses = [
-        ("Whole Foods Organic Groceries", 134.50, max(1, curr_day - 1), "Food & Dining", "Credit Card", "Weekly pantry restock"),
-        ("Shell Fuel Station", 48.00, max(1, curr_day - 2), "Transportation", "Credit Card", "Full tank refill"),
-        ("Monthly Studio Rent", 1200.00, 1, "Housing & Rent", "Bank Transfer", "October monthly rent"),
-        ("Starbucks Cold Brew & Bagel", 9.45, max(1, curr_day - 1), "Food & Dining", "UPI", "Morning breakfast"),
-        ("Amazon Ergonomic Mouse Pad", 28.50, max(1, curr_day - 3), "Shopping", "Debit Card", "Desk accessories"),
-        ("City Electric & Water Utility", 115.80, max(1, curr_day - 5), "Utilities & Bills", "Net Banking", "Utility statement"),
-        ("Uber Ride to Airport", 32.40, max(1, curr_day - 4), "Transportation", "UPI", "Late night commute"),
-        ("CVS Health Pharmacy Medicine", 24.20, max(1, curr_day - 6), "Health & Fitness", "Cash", "Vitamins & band-aids"),
-        ("Olive Garden Italian Dinner", 68.75, max(1, curr_day - 2), "Food & Dining", "Credit Card", "Dinner with partner"),
-        ("Udemy Python Mastery Course", 16.99, max(1, curr_day - 7), "Education", "Debit Card", "Flash sale discount"),
-        ("Zara Autumn Jacket", 89.00, max(1, curr_day - 8), "Shopping", "Credit Card", "Seasonal wardrobe"),
-        ("Movie Tickets & Popcorn", 34.00, max(1, curr_day - 3), "Entertainment", "Digital Wallet", "Weekend cinema outing")
+        ("BigBasket Organic Groceries", 3450.00, max(1, curr_day - 1), "Food & Dining", "Credit Card", "Weekly pantry restock"),
+        ("IndianOil Petrol Bunk", 1850.00, max(1, curr_day - 2), "Transportation", "Credit Card", "Full tank refill"),
+        ("Apartment Monthly Rent", 22000.00, 1, "Housing & Rent", "Bank Transfer", "Monthly rent transfer"),
+        ("Starbucks Cold Brew & Sandwich", 490.00, max(1, curr_day - 1), "Food & Dining", "UPI", "Morning breakfast"),
+        ("Amazon Ergonomic Mouse Pad", 850.00, max(1, curr_day - 3), "Shopping", "Debit Card", "Desk accessories"),
+        ("Bescom Electricity & Water Bill", 1680.00, max(1, curr_day - 5), "Utilities & Bills", "Net Banking", "Utility statement"),
+        ("Uber Premier Ride", 540.00, max(1, curr_day - 4), "Transportation", "UPI", "Commute to office"),
+        ("Apollo Pharmacy Medicines", 380.00, max(1, curr_day - 6), "Health & Fitness", "Cash", "Vitamins & first-aid"),
+        ("Barbeque Nation Family Dinner", 2850.00, max(1, curr_day - 2), "Food & Dining", "Credit Card", "Dinner outing"),
+        ("Udemy Python Mastery Course", 499.00, max(1, curr_day - 7), "Education", "Debit Card", "Learning tutorial"),
+        ("Myntra Casual Wardrobe", 2490.00, max(1, curr_day - 8), "Shopping", "Credit Card", "Seasonal clothes"),
+        ("PVR IMAX Movie & Snacks", 750.00, max(1, curr_day - 3), "Entertainment", "Digital Wallet", "Weekend cinema outing")
     ]
 
     for title, amt, day, cat_name, method, notes in sample_expenses:
@@ -285,7 +285,7 @@ def add_expense():
     db.session.add(expense)
     db.session.commit()
 
-    flash(f'Expense "${amount:.2f}" for "{title}" added successfully!', 'success')
+    flash(f'Expense "₹{amount:.2f}" for "{title}" added successfully!', 'success')
     return redirect(request.referrer or url_for('dashboard'))
 
 
@@ -328,7 +328,7 @@ def budgets_view():
             existing = Budget.query.filter_by(category_id=category_id, month=month).first()
             if existing:
                 existing.amount = amount
-                flash(f'Budget updated to ${amount:,.2f} for {existing.category.name}.', 'success')
+                flash(f'Budget updated to ₹{amount:,.2f} for {existing.category.name}.', 'success')
             else:
                 new_budget = Budget(category_id=category_id, amount=amount, month=month)
                 db.session.add(new_budget)
@@ -410,7 +410,7 @@ def incomes_view():
             )
             db.session.add(inc)
             db.session.commit()
-            flash(f'Income of ${amount:,.2f} from "{source}" logged!', 'success')
+            flash(f'Income of ₹{amount:,.2f} from "{source}" logged!', 'success')
             return redirect(url_for('incomes_view', month=date_val[:7]))
 
     incomes = Income.query.filter(Income.date.startswith(curr_month)).order_by(Income.date.desc()).all()
@@ -700,7 +700,7 @@ def import_csv():
             cat_name = ""
             for item in row:
                 try:
-                    val = float(item.replace('$', '').replace(',', '').strip())
+                    val = float(item.replace('$', '').replace('₹', '').replace('rs', '').replace('inr', '').replace(',', '').strip())
                     if val > 0:
                         amount = val
                         break

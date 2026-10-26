@@ -243,21 +243,21 @@ def generate_insights(expenses, budgets, incomes, current_month=None):
                 "type": "success",
                 "icon": "fa-circle-check",
                 "title": "Healthy Savings Rate",
-                "message": f"You are saving {savings_rate:.1f}% of your monthly income (Net savings: ${savings:,.2f}). Great job maintaining fiscal discipline!"
+                "message": f"You are saving {savings_rate:.1f}% of your monthly income (Net savings: ₹{savings:,.2f}). Great job maintaining fiscal discipline!"
             })
         elif savings_rate > 0:
             insights.append({
                 "type": "info",
                 "icon": "fa-info-circle",
                 "title": "Modest Savings",
-                "message": f"You have saved {savings_rate:.1f}% (${savings:,.2f}) this month. Consider cutting non-essential entertainment or dining to boost your savings buffer."
+                "message": f"You have saved {savings_rate:.1f}% (₹{savings:,.2f}) this month. Consider cutting non-essential entertainment or dining to boost your savings buffer."
             })
         else:
             insights.append({
                 "type": "danger",
                 "icon": "fa-triangle-exclamation",
                 "title": "Cash Flow Deficit",
-                "message": f"Spending exceeds current recorded income by ${abs(savings):,.2f}. Review high-spend categories immediately."
+                "message": f"Spending exceeds current recorded income by ₹{abs(savings):,.2f}. Review high-spend categories immediately."
             })
 
     # 2. Budget Alerts
@@ -271,14 +271,14 @@ def generate_insights(expenses, budgets, incomes, current_month=None):
                     "type": "danger",
                     "icon": "fa-fire",
                     "title": f"Budget Exceeded: {cat_name}",
-                    "message": f"You have spent ${spent:,.2f} against your ${limit:,.2f} budget ({pct:.0f}% used). Limit further expenses here."
+                    "message": f"You have spent ₹{spent:,.2f} against your ₹{limit:,.2f} budget ({pct:.0f}% used). Limit further expenses here."
                 })
             elif pct >= 80:
                 insights.append({
                     "type": "warning",
                     "icon": "fa-triangle-exclamation",
                     "title": f"Budget Warning: {cat_name}",
-                    "message": f"You've reached {pct:.0f}% of your ${limit:,.2f} budget with ${(limit - spent):,.2f} remaining."
+                    "message": f"You've reached {pct:.0f}% of your ₹{limit:,.2f} budget with ₹{(limit - spent):,.2f} remaining."
                 })
 
     # 3. Top Spending Category
@@ -291,7 +291,7 @@ def generate_insights(expenses, budgets, incomes, current_month=None):
                 "type": "info",
                 "icon": "fa-pie-chart",
                 "title": f"Heavy Concentration: {top_cat}",
-                "message": f"{top_cat} accounts for {pct_of_total:.1f}% (${top_amount:,.2f}) of your total expenses this month."
+                "message": f"{top_cat} accounts for {pct_of_total:.1f}% (₹{top_amount:,.2f}) of your total expenses this month."
             })
 
     # 4. Projected Month-End Spend
@@ -304,7 +304,7 @@ def generate_insights(expenses, budgets, incomes, current_month=None):
             "type": "neutral",
             "icon": "fa-wand-magic-sparkles",
             "title": "Projected Spending",
-            "message": f"At your current pace of ${daily_avg:.2f}/day, your estimated total expenditure this month will be ~${projected:,.2f}."
+            "message": f"At your current pace of ₹{daily_avg:.2f}/day, your estimated total expenditure this month will be ~₹{projected:,.2f}."
         })
 
     # Default fallback insight if list is empty

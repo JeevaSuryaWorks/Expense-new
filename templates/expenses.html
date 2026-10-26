@@ -82,7 +82,7 @@
     </div>
     <div class="d-flex align-items-center gap-2">
         <span class="small text-muted">Filtered Total:</span>
-        <span class="h5 fw-bold text-danger mb-0">${{ "%.2f"|format(total_filtered_amount) }}</span>
+        <span class="h5 fw-bold text-danger mb-0">₹{{ "%.2f"|format(total_filtered_amount) }}</span>
     </div>
 </div>
 
@@ -124,7 +124,7 @@
                                 {{ exp.notes if exp.notes else '—' }}
                             </td>
                             <td class="text-end fw-bold text-danger">
-                                -${{ "%.2f"|format(exp.amount) }}
+                                -₹{{ "%.2f"|format(exp.amount) }}
                             </td>
                             <td class="text-center pe-4">
                                 <div class="btn-group btn-group-sm">
@@ -182,7 +182,7 @@
                     </div>
                     <div class="row g-2 mb-3">
                         <div class="col-6">
-                            <label class="form-label small fw-semibold">Amount ($)</label>
+                            <label class="form-label small fw-semibold">Amount (₹)</label>
                             <input type="number" step="0.01" name="amount" id="editAmount" class="form-control" required>
                         </div>
                         <div class="col-6">
