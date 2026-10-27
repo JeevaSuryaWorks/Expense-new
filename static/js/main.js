@@ -283,7 +283,7 @@ async function initDashboardCharts(month) {
                         },
                         tooltip: {
                             callbacks: {
-                                label: ctx => ` ${ctx.dataset.label}: $${Number(ctx.raw).toLocaleString(undefined, {minimumFractionDigits: 2})}`
+                                label: ctx => ` ${ctx.dataset.label}: ₹${Number(ctx.raw).toLocaleString('en-IN', {minimumFractionDigits: 2})}`
                             }
                         }
                     },
@@ -296,7 +296,7 @@ async function initDashboardCharts(month) {
                             grid: { color: gridColor },
                             ticks: {
                                 color: textColor,
-                                callback: val => '$' + val
+                                callback: val => '₹' + Number(val).toLocaleString('en-IN')
                             }
                         }
                     }
@@ -345,7 +345,7 @@ async function initDashboardCharts(month) {
                         },
                         tooltip: {
                             callbacks: {
-                                label: ctx => ` ${ctx.label}: $${Number(ctx.raw).toLocaleString(undefined, {minimumFractionDigits: 2})}`
+                                label: ctx => ` ${ctx.label}: ₹${Number(ctx.raw).toLocaleString('en-IN', {minimumFractionDigits: 2})}`
                             }
                         }
                     }
@@ -375,7 +375,7 @@ async function initAnalyticsCharts(month) {
                 labels: data.labels,
                 datasets: [
                     {
-                        label: 'Income ($)',
+                        label: 'Income (₹)',
                         data: data.incomes,
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -384,7 +384,7 @@ async function initAnalyticsCharts(month) {
                         pointRadius: 4
                     },
                     {
-                        label: 'Spending ($)',
+                        label: 'Spending (₹)',
                         data: data.expenses,
                         borderColor: '#ef4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
@@ -400,7 +400,7 @@ async function initAnalyticsCharts(month) {
                 plugins: { legend: { labels: { color: textColor } } },
                 scales: {
                     x: { ticks: { color: textColor }, grid: { display: false } },
-                    y: { ticks: { color: textColor, callback: val => '$' + val }, grid: { color: gridColor } }
+                    y: { ticks: { color: textColor, callback: val => '₹' + Number(val).toLocaleString('en-IN') }, grid: { color: gridColor } }
                 }
             }
         });
@@ -455,7 +455,7 @@ async function initAnalyticsCharts(month) {
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { ticks: { color: textColor }, grid: { display: false } },
-                    y: { ticks: { color: textColor, callback: val => '$' + val }, grid: { color: gridColor } }
+                    y: { ticks: { color: textColor, callback: val => '₹' + Number(val).toLocaleString('en-IN') }, grid: { color: gridColor } }
                 }
             }
         });

@@ -1,5 +1,9 @@
+import sys
 from app import app
 from smart_categorizer import parse_natural_expense
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 def run_tests():
     client = app.test_client()
@@ -13,10 +17,10 @@ def run_tests():
 
     # 2. Test Smart Natural Language Parsing
     test_cases = [
-        "Spent $64.50 at Olive Garden yesterday via Credit Card",
-        "Paid 120 for electricity bill today",
-        "Uber ride $24.00 yesterday with UPI",
-        "Netflix subscription $15.99"
+        "Spent ₹650 at Barbeque Nation yesterday via Credit Card",
+        "Paid Rs. 1850 for electricity bill today",
+        "Uber ride ₹240 yesterday with UPI",
+        "Netflix subscription INR 649"
     ]
     for tc in test_cases:
         parsed = parse_natural_expense(tc)
